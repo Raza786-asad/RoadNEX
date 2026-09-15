@@ -84,6 +84,10 @@ export default function MunicipalLoginPage({ onLogin }) {
 
   const handleGoogleLogin = async () => {
     setError('');
+    if (!auth || !googleProvider) {
+      setError('Google Sign-In is not configured yet. Please sign in using email & password.');
+      return;
+    }
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);

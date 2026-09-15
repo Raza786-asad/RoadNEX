@@ -1,18 +1,31 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// TODO: Replace with your actual Firebase configuration object
-// Make sure to add these to your .env file
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
-};
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+const authDomain = import.meta.env.VITE_FIREBASE_AUTH_DOMAIN;
+const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+let app = null;
+let auth = null;
+let googleProvider = null;
+
+// Only initialize if a valid non-empty API key is provided
+if (apiKey && typeof apiKey === 'string' && apiKey.trim().length > 10 && apiKey !== 'your-firebase-api-key') {
+  try {
+    const firebaseConfig = {
+      apiKey,
+      authDomain: authDomain || `${projectId || 'roadguard'}.firebaseapp.com`,
+      projectId: projectId || 'roadguard',
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+      appId: import.meta.env.VITE_FIREBASE_APP_ID || ''
+    };
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    googleProvider = new GoogleAuthProvider();
+  } catch (error) {
+    console.warn('[Firebase] Initialization skipped:', error.message);
+  }
+}
+
+export { app, auth, googleProvider };
