@@ -217,3 +217,5 @@ export async function updateUserAvatar(id, avatarUrl) {
 
   return sanitize(rows[0]);
 }
+
+export { pool, findUserById as getUserById };

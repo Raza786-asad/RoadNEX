@@ -211,7 +211,7 @@ $$\\text{Priority Score} = \\text{Severity (40)} + \\text{Confidence (25)} + \\t
 
 #### 2. Assigned Municipal Staff Member
 - **Selected Crew Leader**: **Vikram Singh** (Pothole Repair Crew Alpha)
-- **Contact Line**: `+91 98765 43210`
+- **Contact Line**: \`+91 98765 43210\`
 - **Target Resolution SLA**: **24 Hours** (Urgent Priority)
 - **Status**: Dispatched to Municipal Staff Queue.
 `;
